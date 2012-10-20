@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(:version => 20121020045136) do
 
   create_table "cards", :force => true do |t|
+    t.integer  "game_id"
     t.integer  "value"
     t.string   "color"
     t.integer  "position_on_board"
