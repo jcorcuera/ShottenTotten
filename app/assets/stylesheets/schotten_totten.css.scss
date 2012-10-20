@@ -1,0 +1,17 @@
+body {
+  background: #202020;
+}
+
+canvas {
+  display: block;
+  width: 900px;
+  height: 600px;
+}
+
+#background {
+  background: #ffffff;
+}
+
+#overlapping canvas {
+  margin: -600px 0 0;
+}
