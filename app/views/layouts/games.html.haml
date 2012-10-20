@@ -1,0 +1,28 @@
+!!!
+%html
+
+  %head
+    %title
+      = content_for?(:title) ? yield(:title) : "Schotten Totten"
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag "game", media: "all"
+    = csrf_meta_tag
+    = yield :head
+
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          = link_to "Schotten Totten", root_path, class: "brand"
+          .nav-collapse
+            %ul.nav
+              %li.active= link_to "Home", root_path
+
+    .container-fluid
+      .row-fluid
+        - flash.each do |name, msg|
+          = content_tag :div, msg, id: "flash_#{name}"
+
+        = yield
+
+    = javascript_include_tag "game", debug: Rails.env.development? && params[:jsdebug]
