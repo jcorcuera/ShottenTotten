@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  respond_to :html, :json
 
   def create
     @game = Game.new
@@ -11,6 +12,19 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    respond_with @game
+  end
+
+  def user_info
+    respond_with({
+      id: "#{(Time.now).to_i}#{(Random.rand * 999).to_i}",
+      socketURL: self.get_socket_url
+    })
+  end
+
+  protected
+  def get_socket_url
+    Rails.env.production? ? "" : "http://0.0.0.0:5001"
   end
 
 end
