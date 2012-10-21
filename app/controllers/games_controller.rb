@@ -24,7 +24,7 @@ class GamesController < ApplicationController
 
   protected
   def get_socket_url
-    Rails.env.production? ? "" : "http://0.0.0.0:5001"
+    Rails.env.production? ? "" : "http://0.0.0.0:5000"
   end
 
 end
