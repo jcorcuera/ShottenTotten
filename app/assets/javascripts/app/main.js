@@ -5,12 +5,19 @@ Game = (function() {
   function Game() {
     this.fetchUserInfo = __bind(this.fetchUserInfo, this);
     this.processInfo = __bind(this.processInfo, this);
+    this.start = __bind(this.start, this);
+
     this.events = _.extend({}, Backbone.Events);
+
     this.fetchUserInfo();
   };
 
+  Game.prototype.start = function() {
+    this.events.trigger('start', {})
+  };
+
   Game.prototype.template = function(name, context) {
-    JST['app/templates/' + name](context);
+    return JST['app/templates/' + name](context);
   };
 
   Game.prototype.processInfo = function(info) {
