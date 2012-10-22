@@ -17,7 +17,7 @@ var UserView = Backbone.View.extend({
   render: function() {
     var temp = game.template('user', this.model.toJSON());
     this.$el.html(temp);
-    return this.$el;
+    return this;
   }
 
 });
@@ -29,8 +29,16 @@ var UsersView = Backbone.View.extend({
   },
 
   addUser: function(user) {
-    var userView = new UserView({model: user});
-    this.$el.append(userView.render());
+    if (this.collection.length == 1) {
+      this.$el.html(game.template('waiting_oponent', {}));
+    } else if (this.collection.length == 2) {
+      this.$el.html('');
+      var userView1 = new UserView({model: this.collection.at(0)});
+      var userView2 = new UserView({model: this.collection.at(1)});
+      this.$el.append(userView1.render().el);
+      this.$el.append("<span class='block'>VS</div>");
+      this.$el.append(userView2.render().el);
+    }
   }
 
 });
