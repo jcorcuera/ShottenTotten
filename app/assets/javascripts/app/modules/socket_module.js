@@ -3,16 +3,12 @@ var SocketModule;
 SocketModule = (function() {
 
   function SocketModule() {
-    this.connect = __bind(this.connect, this);
-    this.registerUser = __bind(this.registerUser, this);
-    this.newUserConnected = __bind(this.newUserConnected, this);
-
     this.addHandlers();
   };
 
   SocketModule.prototype.addHandlers = function() {
-    game.events.on('connect-info', this.connect);
-    game.events.on('credentials-entered', this.registerUser);
+    game.events.on('connect-info', this.connect, this);
+    game.events.on('credentials-entered', this.registerUser, this);
   };
 
   SocketModule.prototype.connect = function(info) {
@@ -30,11 +26,16 @@ SocketModule = (function() {
   };
 
   SocketModule.prototype.addSocketHandlers = function() {
-    this.socket.on('new-user-connected', this.newUserConnected);
+    this.socket.on('users-connected', this.UsersConnected, this);
+    this.socket.on('new-user-connected', this.newUserConnected, this);
   };
 
   SocketModule.prototype.newUserConnected = function(user) {
     game.events.trigger('new-user-connected', user);
+  };
+
+  SocketModule.prototype.UsersConnected = function(users) {
+    game.events.trigger('users-connected', users);
   };
 
   return SocketModule;

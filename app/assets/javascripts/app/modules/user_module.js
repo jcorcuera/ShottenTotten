@@ -1,4 +1,10 @@
-var User = Backbone.Model.extend({});
+var User = Backbone.Model.extend({
+
+  isMe: function() {
+    return this.id == game.user_id;
+  }
+
+});
 
 var Users = Backbone.Collection.extend({
   model: User
@@ -42,11 +48,12 @@ var UserModule = (function() {
   };
 
   UserModule.prototype.addHandlers = function() {
-    var _this = this;
+    game.events.on('users-connected', function(users){
+      this.users.add(users);
+    }, this);
     game.events.on('new-user-connected', function(user){
-      console.log('new-user-connected');
-      _this.users.add(user);
-    });
+      this.users.add(user);
+    }, this);
   };
 
   return UserModule;

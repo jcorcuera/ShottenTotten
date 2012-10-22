@@ -22,6 +22,7 @@ Game = (function() {
 
   Game.prototype.processInfo = function(info) {
     this.socketURL = info.socketURL;
+    this.user_id = info.id;
     this.events.trigger('connect-info', info);
   };
 
