@@ -41,7 +41,7 @@ UsernameModule = (function() {
 
   UsernameModule.prototype.eventHandlers = function() {
     var _this = this;
-    game.events.on('start',  function(){
+    game.events.on('load',  function(){
       _this.usernameView.render()
     });
   };

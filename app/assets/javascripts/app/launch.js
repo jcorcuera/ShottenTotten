@@ -1,5 +1,5 @@
 $(function() {
 
-  game.start();
+  game.load();
 
 });
