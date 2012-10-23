@@ -28,6 +28,7 @@ SocketModule = (function() {
   SocketModule.prototype.addSocketHandlers = function() {
     this.socket.on('users-connected', this.UsersConnected, this);
     this.socket.on('new-user-connected', this.newUserConnected, this);
+    this.socket.on('start-game', game.begin);
   };
 
   SocketModule.prototype.newUserConnected = function(user) {

@@ -50,7 +50,6 @@ Game = (function() {
 
 
   Game.prototype.init = function() {
-    this.begin();
   }
 
   Game.prototype.begin = function() {
