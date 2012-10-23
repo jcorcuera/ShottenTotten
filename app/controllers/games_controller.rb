@@ -17,7 +17,7 @@ class GamesController < ApplicationController
 
   def user_info
     respond_with({
-      id: "#{(Time.now).to_i}#{(Random.rand * 999).to_i}",
+      id: "#{((Random.rand * 899).to_i+100)}#{((Random.rand * 899).to_i+100)}#{((Random.rand * 899).to_i+100)}",
       socketURL: self.get_socket_url
     })
   end

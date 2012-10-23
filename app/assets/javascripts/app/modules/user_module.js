@@ -1,12 +1,37 @@
 var User = Backbone.Model.extend({
 
+  initialize: function() {
+    if (this.isMe()) {
+      this.requestToken();
+    }
+  },
+
   isMe: function() {
     return this.id == game.user_id;
+  },
+
+  requestToken: function() {
+    var _this = this;
+    $.ajax({
+      type: 'POST',
+      url: '/users',
+      data: this.toJSON(),
+      success: function(data) {
+        _this.set('token', data.token);
+      },
+      dataType: 'json'
+    });
+  },
+
+  setToken: function(data) {
+    this.set('token', data.token);
+    alert('token:' + data.token + ' / this:' + this.get('token'));
   }
 
 });
 
 var Users = Backbone.Collection.extend({
+  url: '/users',
   model: User
 });
 
