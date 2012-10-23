@@ -12,6 +12,8 @@ Game = (function() {
     this.draw = __bind(this.draw, this);
     this.loop = __bind(this.loop, this);
 
+    this.id = game_id;
+
     this.events = _.extend({}, Backbone.Events);
 
     this.fetchUserInfo();

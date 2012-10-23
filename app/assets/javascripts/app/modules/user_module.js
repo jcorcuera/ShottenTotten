@@ -14,18 +14,13 @@ var User = Backbone.Model.extend({
     var _this = this;
     $.ajax({
       type: 'POST',
-      url: '/users',
+      url: '/games/'+ game.id +'/users',
       data: this.toJSON(),
       success: function(data) {
         _this.set('token', data.token);
       },
       dataType: 'json'
     });
-  },
-
-  setToken: function(data) {
-    this.set('token', data.token);
-    alert('token:' + data.token + ' / this:' + this.get('token'));
   }
 
 });

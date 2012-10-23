@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessible :token, :username
 
+  belongs_to :game
+
   before_create :set_token
 
   protected

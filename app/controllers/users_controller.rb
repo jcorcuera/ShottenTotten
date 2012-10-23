@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   respond_to :json
 
   def create
-    @user = User.new
+    @game = Game.find(params[:game_id])
+    @user = @game.users.new
     @user.id, @user.username = params[:id], params[:username]
     @user.save
     render json: @user
