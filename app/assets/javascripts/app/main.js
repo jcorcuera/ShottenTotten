@@ -8,6 +8,9 @@ Game = (function() {
     this.load = __bind(this.load, this);
     this.init = __bind(this.init, this);
     this.begin = __bind(this.begin, this);
+    this.update = __bind(this.update, this);
+    this.draw = __bind(this.draw, this);
+    this.loop = __bind(this.loop, this);
 
     this.events = _.extend({}, Backbone.Events);
 
@@ -54,6 +57,23 @@ Game = (function() {
     this.ctxBg.drawImage(this.imgSprite,
         0, 0, this.canvasWidth, this.canvasHeight,
         0, 0, this.canvasWidth, this.canvasHeight);
+    this.isPlaying = true;
+    requestAnimationFrame(this.loop);
+  }
+
+  Game.prototype.update = function() {
+    this.ctxEntities.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+  }
+
+  Game.prototype.draw = function() {
+  }
+
+  Game.prototype.loop = function() {
+    if (this.isPlaying) {
+      this.update();
+      this.draw();
+      requestAnimationFrame(this.loop);
+    }
   }
 
  return Game;

@@ -4,5 +4,6 @@
 //= require backbone
 //= require socket.io
 //= require bootstrap-modal
+//= require request_animation_frame
 //= require helper
 //= require app
