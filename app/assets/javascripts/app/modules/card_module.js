@@ -9,9 +9,69 @@ var Cards = Backbone.Collection.extend({
 });
 
 var CardView = Backbone.View.extend({
+
+  initialize: function() {
+    this.model.view = this;
+    this.width = 50;
+    this.height = 46;
+  },
+
+  updatePositionOnHand: function() {
+    this.drawX = (this.model.get('position_on_hand') - 1) * 90 + 110;
+    this.drawY = 542;
+  },
+
+  updateSourceByValue: function() {
+    this.srcX = (this.model.get('value') - 1) * 90 + 20;
+  },
+
+  updateSourceByColor: function() {
+    color_index = _.indexOf(
+      ['black', 'blue', 'green', 'red', 'orange', 'purple'],
+      this.model.get('color')
+    );
+    this.srcY = color_index * 60 + 600;
+  },
+
+  update: function() {
+    this.updatePositionOnHand();
+    this.updateSourceByValue();
+    this.updateSourceByColor();
+  },
+
+  render: function() {
+  }
+
 });
 
 var CardsView = Backbone.View.extend({
+
+  initialize: function() {
+    this.collection.on('add', this.addCard, this);
+    console.log('Listener added!');
+  },
+
+  addCard: function(card) {
+    console.log('card Added');
+    cardView = new CardView({model: card});
+  },
+
+  update: function() {
+    _.each(this.collection.models, function(card){
+      if (card.view) {
+        card.view.update();
+      }
+    });
+  },
+
+  render: function() {
+    _.each(this.collection.models, function(card){
+      if (card.view) {
+        card.view.render();
+      }
+    });
+  }
+
 });
 
 var CardModule = (function() {
@@ -27,7 +87,7 @@ var CardModule = (function() {
 
   CardModule.prototype.addHandlers = function() {
     game.events.on('request-cards', function(){
-      this.cards.fetch()
+      this.cards.fetch({add: true})
     }, this);
   };
 

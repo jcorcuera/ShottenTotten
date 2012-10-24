@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   protected
 
   def set_token
-    self.token = Digest::MD5.base64digest("#{self.id}#{self.username}")
+    self.token = Digest::MD5.base64digest("#{self.id}#{self.username}").gsub(/[\/&+]/,'')
   end
 
 end

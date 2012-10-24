@@ -82,9 +82,11 @@ Game = (function() {
 
   Game.prototype.update = function() {
     this.ctxEntities.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    cardModule.cardsView.update();
   }
 
   Game.prototype.draw = function() {
+    cardModule.cardsView.render();
   }
 
   Game.prototype.loop = function() {
