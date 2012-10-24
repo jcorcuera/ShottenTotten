@@ -13,7 +13,7 @@ var CardView = Backbone.View.extend({
   initialize: function() {
     this.model.view = this;
     this.width = 50;
-    this.height = 46;
+    this.height = 56;
   },
 
   updatePositionOnHand: function() {
@@ -40,6 +40,9 @@ var CardView = Backbone.View.extend({
   },
 
   render: function() {
+    game.ctxEntities.drawImage(game.imgSprite,
+        this.srcX, this.srcY, this.width, this.height,
+        this.drawX, this.drawY, this.width, this.height);
   }
 
 });
