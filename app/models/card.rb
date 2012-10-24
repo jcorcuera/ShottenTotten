@@ -6,6 +6,7 @@ class Card < ActiveRecord::Base
 
   scope :on_board, where("position_on_board IS NOT NULL")
   scope :on_hand, where("position_on_hand IS NOT NULL")
+  scope :on_deck, where("user_id IS NULL")
 
   scope :by_user, ->(user_id) { where(user_id: user_id) }
 
