@@ -21,11 +21,20 @@ var CardView = Backbone.View.extend({
     this.drawY = 542;
   },
 
+  updatePositionOnBoard: function() {
+    var row = this.model.get('position_on_board') % 6;
+    var col = Math.floor(this.model.get('position_on_board') / 6);
+    this.drawX = col * 90 + 20;
+    this.drawY = row * 60 + 92 + Math.floor(row/3) * 60;
+  },
+
   updateSourceByValue: function() {
+    //TODO: values will change in future?
     this.srcX = (this.model.get('value') - 1) * 90 + 20;
   },
 
   updateSourceByColor: function() {
+    //TODO: values will change in future?
     color_index = _.indexOf(
       ['black', 'blue', 'green', 'red', 'orange', 'purple'],
       this.model.get('color')
@@ -34,7 +43,11 @@ var CardView = Backbone.View.extend({
   },
 
   update: function() {
-    this.updatePositionOnHand();
+    if (this.model.get('position_on_hand')) {
+      this.updatePositionOnHand();
+    } else {
+      this.updatePositionOnBoard();
+    }
     this.updateSourceByValue();
     this.updateSourceByColor();
   },
