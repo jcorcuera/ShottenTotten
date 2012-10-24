@@ -2,6 +2,7 @@ var User = Backbone.Model.extend({
 
   initialize: function() {
     if (this.isMe()) {
+      game.user = this;
       this.requestToken();
     }
   },
@@ -26,7 +27,6 @@ var User = Backbone.Model.extend({
 });
 
 var Users = Backbone.Collection.extend({
-  url: '/users',
   model: User
 });
 

@@ -5,6 +5,7 @@ Game = (function() {
   function Game() {
     this.fetchUserInfo = __bind(this.fetchUserInfo, this);
     this.processInfo = __bind(this.processInfo, this);
+    this.requestCards = __bind(this.requestCards, this);
     this.load = __bind(this.load, this);
     this.init = __bind(this.init, this);
     this.begin = __bind(this.begin, this);
@@ -36,6 +37,22 @@ Game = (function() {
     });
   };
 
+  Game.prototype.token = function() {
+    if (game.user) {
+      return game.user.get('token');
+    }
+  };
+
+  Game.prototype.requestCards = function() {
+    console.log('requesting cards...');
+    if (this.token()) {
+      this.events.trigger('request-cards');
+    } else {
+      console.log('delaying ...');
+      setTimeout(this.requestCards, 2 * 1000);
+    }
+  };
+
   Game.prototype.load = function() {
     this.events.trigger('load', {})
     this.canvasBg = document.getElementById("canvasBg");
@@ -58,6 +75,7 @@ Game = (function() {
     this.ctxBg.drawImage(this.imgSprite,
         0, 0, this.canvasWidth, this.canvasHeight,
         0, 0, this.canvasWidth, this.canvasHeight);
+    this.requestCards();
     this.isPlaying = true;
     requestAnimationFrame(this.loop);
   }
