@@ -5,7 +5,8 @@ class CardsController < ApplicationController
 
   def index
     @game = Game.find(params[:game_id])
-    @cards = @game.cards_for_user(@user)
+    @cards = @game.cards.on_board
+    @cards += @game.cards.on_hand.by_user(@user) if @user
     respond_with @cards
   end
 

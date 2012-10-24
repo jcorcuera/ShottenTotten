@@ -4,10 +4,7 @@ class Game < ActiveRecord::Base
   NUMBERS = (1..9).to_a
 
   has_many :users
-
-  def cards_for_user(user)
-
-  end
+  has_many :cards
 
   def setup
     COLORS.each do |color|
