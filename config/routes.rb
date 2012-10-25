@@ -6,6 +6,6 @@ ShottenTotten::Application.routes.draw do
 
     resources :users, only: :create
 
-    resources :cards, only: :index
+    resources :cards, only: [:index, :update]
   end
 end

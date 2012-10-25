@@ -1,10 +1,18 @@
 var Card = Backbone.Model.extend({
+
+  initialize: function() {
+    this.on('change:position_on_board', function(model, position_on_board){
+      this.set('position_on_hand', null);
+      this.save({token: game.token()});
+    });
+  }
+
 });
 
 var Cards = Backbone.Collection.extend({
   model: Card,
   url: function() {
-    return '/games/'+ game.id +'/cards?token='+ game.token();
+    return '/games/'+ game.id +'/cards';
   }
 });
 
@@ -103,7 +111,7 @@ var CardModule = (function() {
 
   CardModule.prototype.addHandlers = function() {
     game.events.on('request-cards', function(){
-      this.cards.fetch({add: true})
+      this.cards.fetch({add: true, data: {token: game.token()}});
     }, this);
   };
 
