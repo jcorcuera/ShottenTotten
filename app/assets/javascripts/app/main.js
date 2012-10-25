@@ -53,6 +53,10 @@ Game = (function() {
     }
   };
 
+  Game.prototype.isMyTurn = function() {
+    return this.model.get('turn_id') == this.user_id;
+  };
+
   Game.prototype.load = function() {
     this.events.trigger('load', {})
     this.canvasBg = document.getElementById("canvasBg");
