@@ -2,13 +2,22 @@ var Card = Backbone.Model.extend({
 
   initialize: function() {
     this.on('change:position_on_board', function(model, position_on_board){
-      if (game.isMyTurn()) {
+      if (game.isMyTurn() && this.isValidMove(position_on_board)) {
         this.set('position_on_hand', null);
         this.save({token: game.token()});
       } else {
         this.set(this.previousAttributes() ,{silent: true})
       }
     });
+  },
+
+  isValidMove: function(new_position) {
+    var row = this.get('position_on_board') % 6;
+    if (game.boardPositionIsUp()) {
+      return row < 3;
+    } else {
+      return row >= 3;
+    }
   }
 
 });
