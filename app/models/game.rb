@@ -18,6 +18,8 @@ class Game < ActiveRecord::Base
     self.cards.create(cards_data)
 
     self.users.each {|user| deal_to(user) }
+
+    assign_turn_to_players
   end
 
   def deal_to(user)
@@ -33,6 +35,16 @@ class Game < ActiveRecord::Base
   def available_positions_on_hand(user)
     used_positions = self.cards.on_hand.by_user(user).select(:position_on_hand).map(&:position_on_hand)
     (1..MAX_CARDS_ON_HAND).to_a - used_positions
+  end
+
+  def assign_turn_to_players
+    user_ids = self.users.map &:id
+    next_turn = if turn_id.present?
+                  (user_ids - [turn_id])[0]
+                else
+                  user_ids.sample
+                end
+    update_attribute(:turn_id, next_turn)
   end
 
 end
