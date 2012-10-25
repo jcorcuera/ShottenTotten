@@ -12,12 +12,10 @@ var Card = Backbone.Model.extend({
   },
 
   isValidMove: function(new_position) {
-    var row = this.get('position_on_board') % 6;
-    if (game.boardPositionIsUp()) {
-      return row < 3;
-    } else {
-      return row >= 3;
-    }
+    var row = new_position % 6;
+    var isInCorrectBoardSide =  game.boardPositionIsUp() ? row < 3 : row >= 3;
+    var isPositionFree = cardModule.cards.find_by_position_on_board(new_position) ? false : true;
+    return isInCorrectBoardSide & isPositionFree;
   }
 
 });
@@ -26,6 +24,13 @@ var Cards = Backbone.Collection.extend({
   model: Card,
   url: function() {
     return '/games/'+ game.id +'/cards';
+  },
+
+  find_by_position_on_board: function(position) {
+    found = this.find(function(card){
+      return card.get('position_on_board') == position & card.get('position_on_hand') == null;
+    });
+    return found;
   }
 });
 
