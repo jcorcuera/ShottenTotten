@@ -30,7 +30,7 @@ var CardView = Backbone.View.extend({
 
   updatePositionOnHand: function() {
     this.drawX = (this.model.get('position_on_hand') - 1) * 90 + 155;
-    this.drawY = 542;
+    this.drawY = game.boardPositionIsUp() ? 2 : 542;
   },
 
   updatePositionOnBoard: function() {

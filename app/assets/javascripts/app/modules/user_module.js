@@ -3,7 +3,7 @@ var User = Backbone.Model.extend({
   initialize: function() {
     if (this.isMe()) {
       game.user = this;
-      this.requestToken();
+      this.requestInfo();
     }
   },
 
@@ -11,14 +11,14 @@ var User = Backbone.Model.extend({
     return this.id == game.user_id;
   },
 
-  requestToken: function() {
+  requestInfo: function() {
     var _this = this;
     $.ajax({
       type: 'POST',
       url: '/games/'+ game.id +'/users',
       data: this.toJSON(),
       success: function(data) {
-        _this.set('token', data.token);
+        _this.set({token: data.token, position: data.position});
       },
       dataType: 'json'
     });

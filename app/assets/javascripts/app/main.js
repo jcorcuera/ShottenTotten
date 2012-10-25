@@ -57,6 +57,10 @@ Game = (function() {
     return this.model.get('turn_id') == this.user_id;
   };
 
+  Game.prototype.boardPositionIsUp = function() {
+    return this.user.get('position') == 0;
+  };
+
   Game.prototype.load = function() {
     this.events.trigger('load', {})
     this.canvasBg = document.getElementById("canvasBg");
