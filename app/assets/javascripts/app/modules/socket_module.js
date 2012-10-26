@@ -40,7 +40,7 @@ SocketModule = (function() {
   };
 
   SocketModule.prototype.startGame = function() {
-    game.begin();
+    game.init();
   };
 
   return SocketModule;

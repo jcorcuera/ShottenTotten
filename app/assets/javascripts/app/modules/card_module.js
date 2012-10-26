@@ -69,10 +69,12 @@ var CardView = Backbone.View.extend({
   },
 
   update: function() {
-    if (this.model.get('position_on_hand')) {
-      this.updatePositionOnHand();
-    } else {
-      this.updatePositionOnBoard();
+    if (!this.isDragging) {
+      if (this.model.get('position_on_hand')) {
+        this.updatePositionOnHand();
+      } else {
+        this.updatePositionOnBoard();
+      }
     }
     this.updateSourceByValue();
     this.updateSourceByColor();
