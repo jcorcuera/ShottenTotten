@@ -119,13 +119,14 @@ Game = (function() {
 
     selected_card = _.find(cardModule.cards.models, function(card){
       return card.view.drawX < mouse.x && mouse.x < card.view.drawX + card.view.width &&
-          card.view.drawY < mouse.y && mouse.y < card.view.drawY + card.view.height
+          card.view.drawY < mouse.y && mouse.y < card.view.drawY + card.view.height;
     });
 
     if (selected_card) {
       this.cardDragging = selected_card.view;
       this.mousePreviousCoordinates = mouse;
       this.cardDragging.isDragging = true;
+      this.targets = this.availableTargets();
     }
   };
 
@@ -143,11 +144,34 @@ Game = (function() {
   Game.prototype.mouseup = function(e){
     if (this.cardDragging) {
       mouse = __calculate_coordinates_on_canvas(this.canvasEntities, e);
+
+      selected_target = _.find(this.targets, function(target_index){
+        var row = target_index % 6;
+        var col = Math.floor(target_index / 6);
+        var target_x = col * 90 + 20;
+        var target_y = row * 60 + 92 + Math.floor(row/3) * 60;
+        return  target_x < mouse.x && mouse.x < target_x + 50 &&
+                target_y < mouse.y && mouse.y < target_y + 56;
+      });
+
+      if(selected_target) {
+        this.cardDragging.model.set('position_on_board', selected_target);
+      }
+
       this.cardDragging.isDragging = false;
       this.cardDragging = null;
       this.mousePreviousCoordinates = null;
     }
   };
+
+  Game.prototype.availableTargets = function() {
+    all_positions = _.range(53);
+    position_in_groups = _.groupBy(all_positions, function(position) {
+      return Math.floor((position % 6) / 3);
+    });
+    return this.boardPositionIsUp() ? position_in_groups[0] : position_in_groups[1];
+  };
+
 
  return Game;
 
