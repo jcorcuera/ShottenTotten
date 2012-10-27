@@ -168,7 +168,11 @@ Game = (function() {
 
   Game.prototype.availableTargets = function() {
     all_positions = _.range(54);
-    position_in_groups = _.groupBy(all_positions, function(position) {
+    taken_positions = _.map(cardModule.cards.models, function(card) {
+      return card.get('position_on_board');
+    });
+    available_positions = _.difference(all_positions, taken_positions);
+    position_in_groups = _.groupBy(available_positions, function(position) {
       return Math.floor((position % 6) / 3);
     });
     return this.boardPositionIsUp() ? position_in_groups[0] : position_in_groups[1];
