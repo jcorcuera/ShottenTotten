@@ -15,6 +15,8 @@ class CardsController < ApplicationController
       position_on_hand: params[:position_on_hand],
       position_on_board: params[:position_on_board]
     )
+    @game.deal_to(@user)
+    @game.assign_turn_to_players
     render json: @card
   end
 

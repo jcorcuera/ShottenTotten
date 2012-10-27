@@ -166,7 +166,7 @@ Game = (function() {
   };
 
   Game.prototype.availableTargets = function() {
-    all_positions = _.range(53);
+    all_positions = _.range(54);
     position_in_groups = _.groupBy(all_positions, function(position) {
       return Math.floor((position % 6) / 3);
     });
