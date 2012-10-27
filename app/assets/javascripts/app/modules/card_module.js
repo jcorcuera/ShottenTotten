@@ -85,6 +85,14 @@ var CardView = Backbone.View.extend({
     game.ctxEntities.drawImage(game.imgSprite,
         this.srcX, this.srcY, this.width, this.height,
         this.drawX, this.drawY, this.width, this.height);
+    //highlight if it's the last move
+    if (this.model.id == game.lastCardMovedId) {
+      game.ctxEntities.beginPath();
+      game.ctxEntities.rect(this.drawX - 2, this.drawY - 2, this.width + 4, this.height + 4);
+      game.ctxEntities.lineWidth="2";
+      game.ctxEntities.strokeStyle="white";
+      game.ctxEntities.stroke();
+    }
   }
 
 });

@@ -20,6 +20,7 @@ Game = (function() {
 
     this.events = _.extend({}, Backbone.Events);
     this.events.on('next-turn', this.requestCards, this);
+    this.events.on('next-turn', this.setLastMove, this);
 
     this.fetchUserInfo();
   };
@@ -171,6 +172,10 @@ Game = (function() {
       return Math.floor((position % 6) / 3);
     });
     return this.boardPositionIsUp() ? position_in_groups[0] : position_in_groups[1];
+  };
+
+  Game.prototype.setLastMove = function(last_move) {
+    this.lastCardMovedId = last_move.card_id;
   };
 
 
