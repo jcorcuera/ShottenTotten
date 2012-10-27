@@ -19,6 +19,7 @@ Game = (function() {
     this.id = game_id;
 
     this.events = _.extend({}, Backbone.Events);
+    this.events.on('next-turn', this.requestCards, this);
 
     this.fetchUserInfo();
   };

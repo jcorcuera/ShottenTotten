@@ -5,6 +5,7 @@ var Card = Backbone.Model.extend({
       if (game.isMyTurn() && this.isValidMove(position_on_board)) {
         this.set('position_on_hand', null);
         this.save({token: game.token()});
+        game.events.trigger('move-done', {card_id: this.id});
       } else {
         this.set(this.previousAttributes() ,{silent: true})
       }
