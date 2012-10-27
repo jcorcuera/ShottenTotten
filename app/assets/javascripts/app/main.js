@@ -156,7 +156,7 @@ Game = (function() {
                 target_y < mouse.y && mouse.y < target_y + 56;
       });
 
-      if(selected_target) {
+      if(selected_target != undefined) {
         this.cardDragging.model.set('position_on_board', selected_target);
       }
 
