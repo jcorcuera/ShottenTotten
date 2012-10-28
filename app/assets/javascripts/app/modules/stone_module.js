@@ -19,6 +19,52 @@ var StoneView = Backbone.View.extend({
 
   initialize: function() {
     this.model.view = this;
+  },
+
+  updateSource: function() {
+    this.srcX = 830;
+    if (this.model.get('user_id')) {
+      this.srcY = 660;
+    } else {
+      this.srcY = 600;
+    }
+  },
+
+  updateSize: function() {
+    if (this.model.get('user_id')) {
+      this.width = 35;
+      this.height = 28;
+    } else {
+      this.width = 46;
+      this.height = 56;
+    }
+  },
+
+  updateDraw: function() {
+    var user_id = this.model.get('user_id');
+    if (user_id) {
+      this.drawX = this.model.get('position') * 90 + 28;
+      if (game.user_id == user_id) {
+        this.drawY = game.boardPositionIsUp() ? 58 : 512;
+      } else {
+        this.drawY = game.boardPositionIsUp() ? 512 : 58;
+      }
+    } else {
+      this.drawX = this.model.get('position') * 90 + 22;
+      this.drawY = 272;
+    }
+  },
+
+  update: function() {
+    this.updateSource();
+    this.updateSize();
+    this.updateDraw();
+  },
+
+  render: function() {
+    game.ctxEntities.drawImage(game.imgSprite,
+        this.srcX, this.srcY, this.width, this.height,
+        this.drawX, this.drawY, this.width, this.height);
   }
 
 });
@@ -29,8 +75,24 @@ var StonesView = Backbone.View.extend({
     this.collection.on('add', this.addStone, this);
   },
 
-  addCard: function(stone) {
+  addStone: function(stone) {
     stoneView = new StoneView({model: stone});
+  },
+
+  update: function() {
+    _.each(this.collection.models, function(stone){
+      if (stone.view) {
+        stone.view.update();
+      }
+    });
+  },
+
+  render: function() {
+    _.each(this.collection.models, function(stone){
+      if (stone.view) {
+        stone.view.render();
+      }
+    });
   }
 
 });
@@ -51,7 +113,7 @@ var StoneModule = (function() {
       this.stones.fetch({add: true});
     }, this);
     game.events.on('stone-changed', function(stone_info){
-      this.stones.get(stone_info.id).fetch({add: true});
+      this.stones.get(stone_info.stone_id).fetch({add: true});
     }, this);
   };
 

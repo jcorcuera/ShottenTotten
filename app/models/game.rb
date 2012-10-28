@@ -22,7 +22,7 @@ class Game < ActiveRecord::Base
     cards_data.shuffle!
     self.cards.create(cards_data)
 
-    6.times do |position|
+    9.times do |position|
       self.stones.create(position: position)
     end
   end

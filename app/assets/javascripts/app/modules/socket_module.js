@@ -61,7 +61,7 @@ SocketModule = (function() {
   };
 
   SocketModule.prototype.stoneChanged = function(stone_info) {
-    game.events.trigger('stone- changed', stone_info);
+    game.events.trigger('stone-changed', stone_info);
   };
 
   return SocketModule;
