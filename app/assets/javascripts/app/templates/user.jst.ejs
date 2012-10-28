@@ -1,1 +1,2 @@
-<%= username %>
+<%= username %><%= (game.model.get('turn_id') == id) ? '(TURN)' : '' %>
+<%= console.log('ID: ' + id + ' turn: ' + game.model.get('turn_id')) %>

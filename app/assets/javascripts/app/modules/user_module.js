@@ -46,6 +46,7 @@ var UsersView = Backbone.View.extend({
 
   initialize: function() {
     this.collection.on('add', this.addUser, this);
+    game.model.on('change:turn_id', this.render, this);
   },
 
   addUser: function(user, collection, options) {
