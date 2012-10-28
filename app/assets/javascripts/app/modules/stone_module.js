@@ -1,5 +1,12 @@
 var Stone = Backbone.Model.extend({
 
+  initialize: function() {
+    this.on('change:user_id', function(model, user_id){
+      this.save();
+      game.events.trigger('stone-change', {stone_id: this.id});
+    });
+  }
+
 });
 
 var Stones = Backbone.Collection.extend({
@@ -41,10 +48,10 @@ var StoneModule = (function() {
 
   StoneModule.prototype.addHandlers = function() {
     game.events.on('start-game', function(){
-      this.stones.fetch();
+      this.stones.fetch({add: true});
     }, this);
-    game.events.on('claim', function(id){
-      Stone.get(id).fetch();
+    game.events.on('stone-changed', function(stone_info){
+      this.stones.get(stone_info.id).fetch({add: true});
     }, this);
   };
 

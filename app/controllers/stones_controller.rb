@@ -8,6 +8,17 @@ class StonesController < ApplicationController
     respond_with @stones
   end
 
+  def show
+    @stone = @game.stones.find(params[:id])
+    render json: @stone
+  end
+
+  def update
+    @stone = @game.stones.find(params[:id])
+    @stone.update_attribute(:user_id, params[:user_id])
+    render json: @stone
+  end
+
   protected
 
   def load_game

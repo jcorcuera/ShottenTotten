@@ -8,6 +8,6 @@ ShottenTotten::Application.routes.draw do
 
     resources :cards, only: [:index, :update]
 
-    resources :stones, only: [:index, :update]
+    resources :stones, only: [:index, :show, :update]
   end
 end
