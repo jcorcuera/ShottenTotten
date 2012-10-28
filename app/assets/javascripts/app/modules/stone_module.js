@@ -13,6 +13,12 @@ var Stones = Backbone.Collection.extend({
   model: Stone,
   url: '/games/'+ game.id +'/stones',
 
+  unclaimed: function() {
+    return _.filter(this.models, function(stone) {
+      return stone.get('user_id') == null;
+    });
+  }
+
 });
 
 var StoneView = Backbone.View.extend({

@@ -182,11 +182,14 @@ Game = (function() {
   };
 
   Game.prototype.availableTargets = function() {
-    all_positions = _.range(54);
     taken_positions = _.map(cardModule.cards.models, function(card) {
       return card.get('position_on_board');
     });
-    available_positions = _.difference(all_positions, taken_positions);
+    unclaimed_positions = _.map(stoneModule.stones.unclaimed(), function(stone) {
+      return _.range(stone.get('position') * 6, (stone.get('position') + 1) * 6);
+    });
+
+    available_positions = _.difference(_.flatten(unclaimed_positions), taken_positions);
     position_in_groups = _.groupBy(available_positions, function(position) {
       return Math.floor((position % 6) / 3);
     });
