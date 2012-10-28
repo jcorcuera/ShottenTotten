@@ -6,6 +6,11 @@ class Game < ActiveRecord::Base
 
   has_many :users
   has_many :cards
+  has_many :stones
+
+  attr_accessible :position, :turn_id
+
+  after_create :setup
 
   def setup
     cards_data = []
@@ -17,8 +22,13 @@ class Game < ActiveRecord::Base
     cards_data.shuffle!
     self.cards.create(cards_data)
 
-    self.users.each {|user| deal_to(user) }
+    6.times do |position|
+      self.stones.create(position: position)
+    end
+  end
 
+  def start
+    self.users.each {|user| deal_to(user) }
     assign_turn_to_players
   end
 

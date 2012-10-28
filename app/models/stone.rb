@@ -1,3 +1,6 @@
 class Stone < ActiveRecord::Base
-  # attr_accessible :title, :body
+  belongs_to :game
+  belongs_to :user
+
+  attr_accessible :position, :user
 end

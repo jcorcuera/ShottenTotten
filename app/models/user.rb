@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :token, :username
 
   belongs_to :game
+  has_many :stones
 
   before_create :set_token, :set_position
 

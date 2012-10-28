@@ -47,6 +47,7 @@ SocketModule = (function() {
 
   SocketModule.prototype.startGame = function() {
     game.init();
+    game.events.trigger('start-game', {});
   };
 
   SocketModule.prototype.nextTurn = function(last_move) {

@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   protected
 
   def check_for_game_setup
-    @game.setup if @game.users.count == 2
+    @game.start if @game.users.count == 2
   end
 
 end
