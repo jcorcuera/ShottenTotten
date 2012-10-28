@@ -121,6 +121,19 @@ Game = (function() {
   Game.prototype.mousedown = function(e){
     mouse = __calculate_coordinates_on_canvas(this.canvasEntities, e);
 
+    selected_stone = _.find(stoneModule.stones.models, function(stone){
+      return stone.view.drawX < mouse.x && mouse.x < stone.view.drawX + stone.view.width &&
+          stone.view.drawY < mouse.y && mouse.y < stone.view.drawY + stone.view.height;
+    });
+
+    if (selected_stone && this.isMyTurn()) {
+      if (selected_stone.get('user_id')) {
+        selected_stone.set('user_id', null);
+      } else {
+        selected_stone.set('user_id', game.user_id);
+      }
+    }
+
     selected_card = _.find(cardModule.cards.models, function(card){
       return card.view.drawX < mouse.x && mouse.x < card.view.drawX + card.view.width &&
           card.view.drawY < mouse.y && mouse.y < card.view.drawY + card.view.height;
